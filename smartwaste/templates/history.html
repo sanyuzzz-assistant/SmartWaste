@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Detection History - SmartWaste{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Detection History</h2>
+            <p class="text-muted mb-0">
+                View your previously detected waste images and results.
+            </p>
+        </div>
+
+        <a href="{% url 'upload_waste' %}" class="btn btn-success">
+            + Detect New Waste
+        </a>
+    </div>
+
+
+    {% if detections %}
+
+    <div class="row g-4">
+
+        {% for detection in detections %}
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm h-100 border-0">
+
+                <!-- Image -->
+                {% if detection.uploaded_image %}
+                <img src="{{ detection.uploaded_image.url }}"
+                     class="card-img-top"
+                     alt="Waste Image"
+                     style="height:220px; object-fit:cover;">
+                {% endif %}
+
+
+                <div class="card-body">
+
+                    <!-- Category -->
+                    <h5 class="fw-bold mb-2">
+                        {{ detection.predicted_category.name|title }}
+                    </h5>
+
+
+                    <!-- Confidence -->
+                    <p class="mb-2">
+                        <strong>Confidence:</strong>
+                        {{ detection.confidence|floatformat:2 }}%
+                    </p>
+
+
+                    <!-- Recyclable -->
+                    {% if detection.predicted_category.is_recyclable %}
+                        <span class="badge bg-success mb-3">
+                            Recyclable
+                        </span>
+                    {% else %}
+                        <span class="badge bg-secondary mb-3">
+                            Non-Recyclable
+                        </span>
+                    {% endif %}
+
+
+                    <!-- Recommendation -->
+                    <div class="alert alert-light border mt-2">
+                        <strong>Disposal Recommendation:</strong>
+                        <br>
+                        {{ detection.disposal_recommendation }}
+                    </div>
+
+
+                    <!-- Date -->
+                    <small class="text-muted">
+                        Detected on:
+                        {{ detection.created_at|date:"d M Y, h:i A" }}
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <!-- No History -->
+    <div class="text-center py-5">
+
+        <div style="font-size:60px;">♻️</div>
+
+        <h4 class="fw-bold mt-3">
+            No Detection History
+        </h4>
+
+        <p class="text-muted">
+            You haven't detected any waste yet.
+        </p>
+
+        <a href="{% url 'upload_waste' %}"
+           class="btn btn-success">
+            Detect Your First Waste
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

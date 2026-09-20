@@ -1,0 +1,553 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard - SmartWaste
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="bg-white rounded-4 shadow-sm p-4 mb-4">
+
+        <h1 class="fw-bold">
+            Admin Dashboard 🛠️
+        </h1>
+
+        <p class="text-muted mb-0">
+            Monitor SmartWaste users and waste detection activity.
+        </p>
+
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="row g-4">
+
+        <!-- Total Users -->
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1">
+                        👥
+                    </div>
+
+                    <h6 class="text-muted mt-2">
+                        Total Users
+                    </h6>
+
+                    <h2 class="fw-bold text-success">
+                        {{ total_users }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Total Detections -->
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1">
+                        🔍
+                    </div>
+
+                    <h6 class="text-muted mt-2">
+                        Total Detections
+                    </h6>
+
+                    <h2 class="fw-bold text-success">
+                        {{ total_detections }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Recyclable Waste -->
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1">
+                        ♻️
+                    </div>
+
+                    <h6 class="text-muted mt-2">
+                        Recyclable Waste
+                    </h6>
+
+                    <h2 class="fw-bold text-success">
+                        {{ recyclable_count }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Non-Recyclable Waste -->
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1">
+                        🗑️
+                    </div>
+
+                    <h6 class="text-muted mt-2">
+                        Non-Recyclable
+                    </h6>
+
+                    <h2 class="fw-bold text-secondary">
+                        {{ non_recyclable_count }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Waste Category Summary -->
+
+    <div class="card border-0 shadow-sm rounded-4 mt-4">
+
+        <div class="card-body p-4">
+
+            <h4 class="fw-bold mb-4">
+                📊 Waste Category Summary
+            </h4>
+
+            {% if category_summary %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Waste Category
+                            </th>
+
+                            <th>
+                                Number of Detections
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in category_summary %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ item.predicted_category__name|title }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                <span class="badge bg-success fs-6">
+                                    {{ item.count }}
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p class="text-muted mb-0">
+                No waste detection records available yet.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Waste Distribution Chart -->
+
+    <div class="card border-0 shadow-sm rounded-4 mt-4">
+
+        <div class="card-body p-4">
+
+            <h4 class="fw-bold mb-4">
+                📈 Waste Distribution
+            </h4>
+
+            <div style="height: 350px;">
+
+                <canvas id="adminWasteChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Recyclability Overview -->
+
+    <div class="card border-0 shadow-sm rounded-4 mt-4">
+
+        <div class="card-body p-4">
+
+            <h4 class="fw-bold mb-4">
+                ♻️ Recyclability Overview
+            </h4>
+
+            <div style="height: 350px;">
+
+                <canvas id="recyclabilityChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Recent Detections -->
+
+    <div class="card border-0 shadow-sm rounded-4 mt-4">
+
+        <div class="card-body p-4">
+
+            <h4 class="fw-bold mb-4">
+                🕒 Recent Detections
+            </h4>
+
+            {% if recent_detections %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                User
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Confidence
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for detection in recent_detections %}
+
+                        <tr>
+
+                            <td>
+                                {{ detection.user.username }}
+                            </td>
+
+                            <td>
+
+                                {% if detection.predicted_category %}
+
+                                    {{ detection.predicted_category.name|title }}
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        Not Available
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {% if detection.confidence %}
+
+                                    {{ detection.confidence|floatformat:2 }}%
+
+                                {% else %}
+
+                                    -
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {{ detection.created_at|date:"d M Y, h:i A" }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p class="text-muted mb-0">
+                No detection records available yet.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Admin Management -->
+
+    <div class="card border-0 shadow-sm rounded-4 mt-4">
+
+        <div class="card-body p-4">
+
+            <h4 class="fw-bold">
+                ⚙️ Admin Management
+            </h4>
+
+            <p class="text-muted">
+                Use the Django Admin Panel to manage users,
+                waste categories and detection records.
+            </p>
+
+            <a
+                href="/admin/"
+                class="btn btn-success">
+
+                Open Django Admin
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!-- Django Data for Charts -->
+
+{{ category_labels|json_script:"admin-category-labels" }}
+
+{{ category_counts|json_script:"admin-category-counts" }}
+
+{{ recyclable_count|json_script:"admin-recyclable-count" }}
+
+{{ non_recyclable_count|json_script:"admin-non-recyclable-count" }}
+
+
+<script>
+
+    /* ==========================================
+       Waste Distribution Bar Chart
+    ========================================== */
+
+    const adminCategoryLabels = JSON.parse(
+        document.getElementById(
+            'admin-category-labels'
+        ).textContent
+    );
+
+
+    const adminCategoryCounts = JSON.parse(
+        document.getElementById(
+            'admin-category-counts'
+        ).textContent
+    );
+
+
+    const adminChartCanvas = document.getElementById(
+        'adminWasteChart'
+    );
+
+
+    new Chart(adminChartCanvas, {
+
+        type: 'bar',
+
+        data: {
+
+            labels: adminCategoryLabels,
+
+            datasets: [
+
+                {
+                    label: 'Number of Detections',
+
+                    data: adminCategoryCounts
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    display: true
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+                        stepSize: 1
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+
+    /* ==========================================
+       Recyclability Doughnut Chart
+    ========================================== */
+
+    const recyclableCount = JSON.parse(
+        document.getElementById(
+            'admin-recyclable-count'
+        ).textContent
+    );
+
+
+    const nonRecyclableCount = JSON.parse(
+        document.getElementById(
+            'admin-non-recyclable-count'
+        ).textContent
+    );
+
+
+    const recyclabilityCanvas = document.getElementById(
+        'recyclabilityChart'
+    );
+
+
+    new Chart(recyclabilityCanvas, {
+
+        type: 'doughnut',
+
+        data: {
+
+            labels: [
+                'Recyclable',
+                'Non-Recyclable'
+            ],
+
+            datasets: [
+
+                {
+                    label: 'Waste Type',
+
+                    data: [
+                        recyclableCount,
+                        nonRecyclableCount
+                    ]
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: true,
+
+                    position: 'bottom'
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+
+{% endblock %}

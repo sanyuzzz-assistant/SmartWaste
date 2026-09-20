@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - SmartWaste{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+
+        <div class="fs-1 mb-2">
+            👤
+        </div>
+
+        <h2 class="fw-bold">
+            My Profile
+        </h2>
+
+        <p class="text-muted">
+            View your SmartWaste account information and detection statistics.
+        </p>
+
+    </div>
+
+
+    <!-- Profile Information -->
+
+    <div class="row g-4">
+
+        <div class="col-md-5">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body p-4 text-center">
+
+                    <div class="rounded-circle bg-success text-white
+                                d-flex align-items-center justify-content-center
+                                mx-auto mb-3"
+                         style="width:90px;height:90px;font-size:40px;">
+
+                        👤
+
+                    </div>
+
+                    <h4 class="fw-bold">
+                        {{ request.user.username }}
+                    </h4>
+
+                    <p class="text-muted mb-4">
+                        SmartWaste User
+                    </p>
+
+
+                    <div class="text-start">
+
+                        <p>
+                            <strong>Username:</strong>
+                            {{ request.user.username }}
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong>
+                            {% if request.user.email %}
+                                {{ request.user.email }}
+                            {% else %}
+                                Not provided
+                            {% endif %}
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>Account Status:</strong>
+                            <span class="badge bg-success">
+                                Active
+                            </span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Detection Statistics -->
+
+        <div class="col-md-7">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-4">
+                        Detection Statistics
+                    </h4>
+
+
+                    <div class="row g-3">
+
+                        <!-- Total -->
+
+                        <div class="col-sm-4">
+
+                            <div class="bg-light rounded-4 p-3 text-center">
+
+                                <div class="fs-3">
+                                    🔢
+                                </div>
+
+                                <h5 class="fw-bold mt-2">
+                                    {{ total_detections }}
+                                </h5>
+
+                                <small class="text-muted">
+                                    Total Detections
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Recyclable -->
+
+                        <div class="col-sm-4">
+
+                            <div class="bg-light rounded-4 p-3 text-center">
+
+                                <div class="fs-3">
+                                    ♻️
+                                </div>
+
+                                <h5 class="fw-bold text-success mt-2">
+                                    {{ recyclable_count }}
+                                </h5>
+
+                                <small class="text-muted">
+                                    Recyclable
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Non-Recyclable -->
+
+                        <div class="col-sm-4">
+
+                            <div class="bg-light rounded-4 p-3 text-center">
+
+                                <div class="fs-3">
+                                    🗑️
+                                </div>
+
+                                <h5 class="fw-bold text-secondary mt-2">
+                                    {{ non_recyclable_count }}
+                                </h5>
+
+                                <small class="text-muted">
+                                    Non-Recyclable
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="alert alert-success mt-4 mb-0">
+
+                        <strong>♻️ SmartWaste Tip</strong>
+
+                        <p class="mb-0 mt-1">
+                            Proper waste segregation helps improve recycling
+                            and responsible waste management.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Buttons -->
+
+    <div class="text-center mt-5">
+
+        <a href="{% url 'dashboard' %}"
+           class="btn btn-success me-2">
+
+            ← Back to Dashboard
+
+        </a>
+
+        <a href="{% url 'detection_history' %}"
+           class="btn btn-outline-success">
+
+            View Detection History
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

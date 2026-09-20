@@ -1,0 +1,459 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home - SmartWaste
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="py-5">
+
+    <div class="container py-5">
+
+        <div class="row align-items-center">
+
+
+            <!-- Left Content -->
+
+            <div class="col-lg-6">
+
+                <span class="badge bg-success-subtle text-success px-3 py-2 mb-3">
+                    AI-Powered Waste Management
+                </span>
+
+
+                <h1 class="display-4 fw-bold mb-3">
+
+                    Smart Waste.
+                    <span class="text-success">
+                        Smart Future.
+                    </span>
+
+                </h1>
+
+
+                <p class="lead text-muted mb-4">
+
+                    SmartWaste uses Artificial Intelligence to
+                    detect and classify garbage images and provide
+                    smart disposal recommendations.
+
+                </p>
+
+
+                <div class="d-flex gap-3 flex-wrap">
+
+                    <a
+                        href="{% url 'register' %}"
+                        class="btn btn-success btn-lg px-4">
+
+                        Get Started
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'login_view' %}"
+                        class="btn btn-outline-success btn-lg px-4">
+
+                        Login
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Right Illustration -->
+
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+
+                <div class="bg-white rounded-4 shadow-sm p-5">
+
+                    <div class="display-1 mb-3">
+                        ♻️
+                    </div>
+
+                    <h3 class="fw-bold">
+                        AI Waste Detection
+                    </h3>
+
+                    <p class="text-muted mb-0">
+
+                        Upload a waste image and let
+                        SmartWaste identify its category.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="py-5 bg-white">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                How SmartWaste Works
+            </h2>
+
+            <p class="text-muted">
+                Simple, intelligent and environmentally friendly.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- Feature 1 -->
+
+            <div class="col-md-4">
+
+                <div class="text-center p-4">
+
+                    <div class="display-5 mb-3">
+                        📷
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Upload Image
+                    </h4>
+
+                    <p class="text-muted">
+
+                        Upload an image of the garbage
+                        you want to identify.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Feature 2 -->
+
+            <div class="col-md-4">
+
+                <div class="text-center p-4">
+
+                    <div class="display-5 mb-3">
+                        🤖
+                    </div>
+
+                    <h4 class="fw-bold">
+                        AI Detection
+                    </h4>
+
+                    <p class="text-muted">
+
+                        Our trained AI model analyzes
+                        the image and predicts the waste category.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Feature 3 -->
+
+            <div class="col-md-4">
+
+                <div class="text-center p-4">
+
+                    <div class="display-5 mb-3">
+                        🌱
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Smart Disposal
+                    </h4>
+
+                    <p class="text-muted">
+
+                        Get useful recommendations for
+                        proper waste disposal.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= WASTE CATEGORIES ================= -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                Waste Categories
+            </h2>
+
+            <p class="text-muted">
+                SmartWaste can classify different types of waste.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 text-center h-100">
+
+                    <div class="card-body py-4">
+
+                        <div class="fs-1">
+                            🧴
+                        </div>
+
+                        <h5 class="fw-bold mt-2">
+                            Plastic
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 text-center h-100">
+
+                    <div class="card-body py-4">
+
+                        <div class="fs-1">
+                            📄
+                        </div>
+
+                        <h5 class="fw-bold mt-2">
+                            Paper
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 text-center h-100">
+
+                    <div class="card-body py-4">
+
+                        <div class="fs-1">
+                            🍾
+                        </div>
+
+                        <h5 class="fw-bold mt-2">
+                            Glass
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 text-center h-100">
+
+                    <div class="card-body py-4">
+
+                        <div class="fs-1">
+                            🔩
+                        </div>
+
+                        <h5 class="fw-bold mt-2">
+                            Metal
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 text-center h-100">
+
+                    <div class="card-body py-4">
+
+                        <div class="fs-1">
+                            🍃
+                        </div>
+
+                        <h5 class="fw-bold mt-2">
+                            Organic
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 text-center h-100">
+
+                    <div class="card-body py-4">
+
+                        <div class="fs-1">
+                            💻
+                        </div>
+
+                        <h5 class="fw-bold mt-2">
+                            E-Waste
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 text-center h-100">
+
+                    <div class="card-body py-4">
+
+                        <div class="card-body py-4">
+
+                            <div class="fs-1">
+                                🗑️
+                            </div>
+
+                            <h5 class="fw-bold mt-2">
+                                General Waste
+                            </h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 text-center h-100">
+
+                    <div class="card-body py-4">
+
+                        <div class="fs-1">
+                            🌍
+                        </div>
+
+                        <h5 class="fw-bold mt-2">
+                            Environment
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CALL TO ACTION ================= -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="bg-success text-white rounded-4 p-5 text-center">
+
+            <h2 class="fw-bold mb-3">
+                Ready to Make Waste Management Smarter?
+            </h2>
+
+            <p class="mb-4">
+
+                Create your SmartWaste account and
+                start detecting waste with AI.
+
+            </p>
+
+
+            <a
+                href="{% url 'register' %}"
+                class="btn btn-light btn-lg px-4">
+
+                Create Account
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+# Virtual environments
+venv/
+ml_venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Django
+*.log
+db.sqlite3
+
+# Environment variables
+.env
+
+# User uploaded files
+media/
+
+# Dataset
+dataset/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# YOLO training runs
+runs/
+
+# YOLO datasets and model
+yolo_clean_dataset/
+yolo_small_dataset/
+yolo11n.pt

@@ -1,0 +1,447 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard - SmartWaste
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Welcome Section -->
+
+    <div class="bg-white rounded-4 shadow-sm p-4 mb-4">
+
+        <h1 class="fw-bold">
+            Welcome, {{ request.user.username }}! 👋
+        </h1>
+
+        <p class="text-muted mb-0">
+            Welcome to your SmartWaste Dashboard.
+            Detect waste and learn the correct way to dispose of it.
+        </p>
+
+    </div>
+
+    <!-- Statistics Section -->
+
+<div class="row g-4 mb-4">
+
+    <!-- Total Detections -->
+
+    <div class="col-md-4">
+
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+
+            <div class="card-body text-center p-4">
+
+                <div class="fs-1 mb-2">
+                    🔢
+                </div>
+
+                <h6 class="text-muted">
+                    Total Detections
+                </h6>
+
+                <h2 class="fw-bold text-success">
+                    {{ total_detections }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Recyclable Waste -->
+
+    <div class="col-md-4">
+
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+
+            <div class="card-body text-center p-4">
+
+                <div class="fs-1 mb-2">
+                    ♻️
+                </div>
+
+                <h6 class="text-muted">
+                    Recyclable Waste
+                </h6>
+
+                <h2 class="fw-bold text-success">
+                    {{ recyclable_count }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Non-Recyclable Waste -->
+
+    <div class="col-md-4">
+
+        <div class="card border-0 shadow-sm rounded-4 h-100">
+
+            <div class="card-body text-center p-4">
+
+                <div class="fs-1 mb-2">
+                    🗑️
+                </div>
+
+                <h6 class="text-muted">
+                    Non-Recyclable Waste
+                </h6>
+
+                <h2 class="fw-bold text-secondary">
+                    {{ non_recyclable_count }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Category-wise Waste Summary -->
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+
+    <div class="card-body p-4">
+
+        <div class="text-center mb-4">
+
+            <div class="fs-1">
+                📊
+            </div>
+
+            <h3 class="fw-bold">
+                Waste Category Summary
+            </h3>
+
+            <p class="text-muted mb-0">
+                Your waste detection summary by category
+            </p>
+
+        </div>
+
+
+        {% if category_summary %}
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-success">
+
+                    <tr>
+                        <th>Waste Category</th>
+                        <th class="text-center">Number of Detections</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in category_summary %}
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ item.predicted_category__name|title }}
+                            </strong>
+                        </td>
+
+                        <td class="text-center">
+
+                            <span class="badge bg-success fs-6">
+                                {{ item.count }}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="text-center py-4">
+
+            <div class="fs-1">
+                ♻️
+            </div>
+
+            <p class="text-muted mb-0">
+                No waste detection records available yet.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- Waste Distribution Chart -->
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+
+    <div class="card-body p-4">
+
+        <div class="text-center mb-4">
+
+            <div class="fs-1">
+                📈
+            </div>
+
+            <h3 class="fw-bold">
+                Waste Distribution
+            </h3>
+
+            <p class="text-muted mb-0">
+                Visual summary of your detected waste
+            </p>
+
+        </div>
+
+        <div style="max-width: 700px; margin: auto;">
+            <canvas id="wasteChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- Dashboard Cards -->
+
+    <div class="row g-4">
+
+
+        <!-- Detect Waste -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1 mb-3">
+                        ♻️
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Detect Waste
+                    </h4>
+
+                    <p class="text-muted">
+                        Upload a garbage image and identify
+                        its category using AI.
+                    </p>
+
+                    <a
+                        href="{% url 'upload_waste' %}"
+                        class="btn btn-success">
+
+                        Upload Image
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Detection History -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1 mb-3">
+                        📊
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Detection History
+                    </h4>
+
+                    <p class="text-muted">
+                        View your previous garbage detection
+                        records and results.
+                    </p>
+
+                    <a 
+    href="{% url 'detection_history' %}" 
+    class="btn btn-success"> 
+
+    View History 
+
+</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Profile -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="fs-1 mb-3">
+                        👤
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Profile
+                    </h4>
+
+                    <p class="text-muted">
+                        View and manage your SmartWaste
+                        user profile.
+                    </p>
+
+                   <a href="{% url 'profile' %}"
+   class="btn btn-success">
+    View Profile
+</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+   <!-- Live Detection Section -->
+
+<div class="card border-0 shadow-sm rounded-4 mt-4">
+
+    <div class="card-body text-center p-5">
+
+        <div class="fs-1 mb-3">
+            📷
+        </div>
+
+        <h3 class="fw-bold">
+            Real-Time Waste Detection
+        </h3>
+
+        <p class="text-muted mb-4">
+            Use your webcam with YOLO AI to detect waste
+            in real time.
+        </p>
+
+        <a href="{% url 'live_detection' %}"
+           class="btn btn-success btn-lg">
+
+            📷 Open Live Detection
+
+        </a>
+
+    </div>
+
+</div>
+
+    <!-- Information Section -->
+
+    <div class="mt-5">
+
+        <div class="bg-success text-white rounded-4 p-4">
+
+            <h3 class="fw-bold">
+                🌱 Make Waste Management Smarter
+            </h3>
+
+            <p class="mb-0">
+                SmartWaste uses Artificial Intelligence to
+                classify waste and provide suitable disposal
+                recommendations.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{{ category_labels|json_script:"category-labels" }}
+{{ category_counts|json_script:"category-counts" }}
+
+<script>
+
+    const categoryLabels = JSON.parse(
+        document.getElementById('category-labels').textContent
+    );
+
+    const categoryCounts = JSON.parse(
+        document.getElementById('category-counts').textContent
+    );
+
+    const ctx = document.getElementById('wasteChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+
+        data: {
+            labels: categoryLabels,
+
+            datasets: [{
+                label: 'Number of Detections',
+                data: categoryCounts
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+
+</script>
+{% endblock %}

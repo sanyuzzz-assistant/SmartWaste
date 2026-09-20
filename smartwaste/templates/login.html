@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login - SmartWaste
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6 col-lg-5">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+
+                        <div class="fs-1">
+                            ♻️
+                        </div>
+
+                        <h2 class="fw-bold">
+                            Welcome Back
+                        </h2>
+
+                        <p class="text-muted">
+                            Login to your SmartWaste account
+                        </p>
+
+                    </div>
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+                        <button type="submit"
+                                class="btn btn-success w-100 py-2">
+
+                            Login
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="text-center mt-4">
+
+                        <p class="text-muted mb-0">
+                            Don't have an account?
+                        </p>
+
+                        <a href="{% url 'register' %}"
+                           class="text-success fw-bold text-decoration-none">
+
+                            Create an account
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

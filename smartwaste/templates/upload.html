@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Upload Waste - SmartWaste
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+
+                    <div class="text-center mb-4">
+
+                        <div class="fs-1">
+                            ♻️
+                        </div>
+
+                        <h2 class="fw-bold">
+                            Detect Waste
+                        </h2>
+
+                        <p class="text-muted">
+                            Upload an image of garbage to analyze it.
+                        </p>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+
+                        <div class="mb-4">
+
+                            <label
+                                for="uploaded_image"
+                                class="form-label fw-bold">
+
+                                Select Waste Image
+
+                            </label>
+
+
+                            <input
+                                type="file"
+                                name="uploaded_image"
+                                id="uploaded_image"
+                                class="form-control"
+                                accept=".jpg,.jpeg,.png"
+                                required>
+
+
+                            <div class="form-text">
+
+                                Allowed formats: JPG, JPEG, PNG
+                                <br>
+                                Maximum size: 5 MB
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Image Preview -->
+
+                        <div
+                            id="imagePreviewContainer"
+                            class="text-center mb-4"
+                            style="display: none;">
+
+                            <p class="fw-bold">
+                                Image Preview
+                            </p>
+
+
+                            <img
+                                id="imagePreview"
+                                src="#"
+                                alt="Image Preview"
+                                class="img-fluid rounded-4 shadow-sm"
+                                style="max-height: 300px;">
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-success w-100 py-2">
+
+                            Upload Image
+
+                        </button>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

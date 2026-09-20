@@ -1,0 +1,294 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        SmartWaste
+        {% endblock %}
+    </title>
+
+
+    <!-- Bootstrap 5 CSS -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+
+    <!-- SmartWaste Custom CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+
+        <div class="container">
+
+
+            <!-- Logo -->
+
+            <a class="navbar-brand fw-bold"
+               href="{% url 'dashboard' %}">
+
+                ♻️ SmartWaste
+
+            </a>
+
+
+            <!-- Mobile Menu Button -->
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu"
+                aria-controls="navbarMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <!-- Navbar Menu -->
+
+            <div
+                class="collapse navbar-collapse"
+                id="navbarMenu">
+
+                <ul class="navbar-nav ms-auto">
+
+
+                    {% if user.is_authenticated %}
+
+
+                        <!-- Dashboard -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{% url 'dashboard' %}">
+
+                                Dashboard
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Detect Waste -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="#">
+
+                                Detect Waste
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- History -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="#">
+
+                                History
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Profile -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="#">
+
+                                Profile
+
+                            </a>
+
+                        </li>
+
+                        {% if request.user.is_staff %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin_dashboard' %}">
+            🛠️ Admin Dashboard
+        </a>
+    </li>
+{% endif %}
+
+
+                        <!-- Logout -->
+
+                        <li class="nav-item">
+
+                            <form method="POST" action="{% url 'logout_view' %}" class="d-inline">
+
+    {% csrf_token %}
+
+    <button
+        type="submit"
+        class="btn btn-link nav-link border-0">
+        Logout
+    </button>
+
+</form>
+
+                        </li>
+
+
+                    {% else %}
+
+
+                        <!-- Login -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{% url 'login_view' %}">
+
+                                Login
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Register -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{% url 'register' %}">
+
+                                Register
+
+                            </a>
+
+                        </li>
+
+
+                    {% endif %}
+
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= MESSAGES ================= -->
+
+    {% if messages %}
+
+        <div class="container mt-3">
+
+            {% for message in messages %}
+
+                <div
+                    class="alert alert-success alert-dismissible fade show"
+                    role="alert">
+
+                    {{ message }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+
+        <div class="container">
+
+            <p class="mb-0">
+
+                © 2026 SmartWaste |
+                Garbage Detection and Recognition System
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ================= BOOTSTRAP JS ================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- SmartWaste Custom JavaScript -->
+
+    <script
+        src="{% static 'js/script.js' %}">
+    </script>
+
+
+</body>
+
+</html>
